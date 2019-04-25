@@ -108,7 +108,7 @@ this.rendition.display(location)
 <img src="https://github.com/ChenMingK/epub-reader/blob/master/questionImgs/1.png?raw=true">
 
 ### 3.如何修改渲染出来的电子书的宽高？
-要实现这一点需要使用epubjs的高级特性：css注入，因为epubjs的实现原理是iframe，而iframe中的dom不受我们的css控制，所以必须要注入css才能实现，具体做法如下：
+要实现这一点需要使用epubjs的高级特性：css注入，因为epubjs的实现原理是iframe，而iframe中的dom不受我们的css控制，所以必须要注入css才能实现，具体做法如下：<br>
 1、在static目录下创建一个test.css，填入以下内容：
 ``` css
 .CoverFigure {
