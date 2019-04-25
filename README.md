@@ -90,7 +90,7 @@ this.rendition.display(location)
 ```
 
 ## questions record
-1.HTML5 range控件
+### 1.HTML5 range控件
 ``` html
 <input class="progress" 
    type="range"
@@ -104,5 +104,57 @@ this.rendition.display(location)
    ref="progress">
 ```
 
-2.使用vue-cli3.0静态资源必须放在public目录下（否则会出现引入不成功的情况但是又不会给提示）
+### 2.使用vue-cli3.0静态资源必须放在public目录下（否则会出现引入不成功的情况但是又不会给提示）
+<img src="https://github.com/ChenMingK/epub-reader/blob/master/questionImgs/1.png?raw=true">
+
+### 3.如何修改渲染出来的电子书的宽高？
+要实现这一点需要使用epubjs的高级特性：css注入，因为epubjs的实现原理是iframe，而iframe中的dom不受我们的css控制，所以必须要注入css才能实现，具体做法如下：
+1、在static目录下创建一个test.css，填入以下内容：
+``` css
+.CoverFigure {
+  width: 100%!important;
+  height: 100%!important;
+}
+.CoverFigure img {
+  width: 100%!important;
+  max-height: 100%!important;
+}
+```
+
+2、在Ebook.vue的showEpub()末尾添加以下代码：
+``` css
+this.rendition.hooks.render.register(view => {
+  const contents = this.rendition.manager.getContents()[0]
+  contents.addStylesheet('/static/test.css')
+})
+```
+
+在test.css中你可以对img的大小进行控制
+
+### 4.使用vue过渡动画
+- 使用v-show动态显示或隐藏元素时，会触发过渡动画
+- transition需要指定name，并包裹一个含v-show的div
+- vue会为transition包裹的div动态添加class，共6种
+<img src="https://github.com/ChenMingK/epub-reader/blob/master/questionImgs/2.png?raw=true">
+
+v-enter: 显示之前 v-enter-to: 显示之后 v-enter-active: 显示的过程<br>
+v-leave: 隐藏之前 v-leave-to: 隐藏之后 v-leave-active: 隐藏的过程<br>
+注意transition的样式必须和包裹的div同级（scss）
+
+
+### 5.当设置栏出现的时候菜单栏阴影隐藏 & 过渡动画不协调
+通过动态绑定class实现
+:class="{'hide-box-shadow': ifSettingShow || !ifTitleAndMenuShow}"
+当设置栏出现或者菜单栏要隐藏时都设置无box-shadow
+
+过渡问题：
+菜单栏高度是48，设置栏是60px;过渡效果改成统一的108px, 否则会有不协调感
+transform: translate3d(0, px2rem(108), 0);
+
+### 6.字号选择条的布局
+左右两侧固定，中间伸缩，每一个字号选择条由左侧横线 + 中间竖线 + 右侧横线来实现, 
+且最左侧和最右侧横线隐藏<br>
+先写好一个左中右的横线，然后有多少种字号就v-for即可，注意使用flex布局以及利用border画线<br>
+中间的图形可以通过border-radius实现，再加上点击事件即可
+
 
