@@ -152,6 +152,7 @@ v-leave: 隐藏之前 v-leave-to: 隐藏之后 v-leave-active: 隐藏的过程<b
 transform: translate3d(0, px2rem(108), 0);
 
 ### 6.字号选择条的布局
+<img src="https://github.com/ChenMingK/epub-reader/blob/master/questionImgs/3.png?raw=true">
 左右两侧固定，中间伸缩，每一个字号选择条由左侧横线 + 中间竖线 + 右侧横线来实现, 
 且最左侧和最右侧横线隐藏<br>
 先写好一个左中右的横线，然后有多少种字号就v-for即可，注意使用flex布局以及利用border画线<br>
