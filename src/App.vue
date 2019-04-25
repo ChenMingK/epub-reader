@@ -1,31 +1,33 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
     <router-view/>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
+<script>
+  export default {
+    name: 'App'
+  }
+  // 根据浏览器宽度设置rem,这样写只能实现每次刷新时重置
+  document.addEventListener('DOMContentLoaded', () => {   // DOM加载完毕后回调
+    const html = document.querySelector('html')           // 取到html根元素
+    let fontSize = window.innerWidth / 10                 // 800 -> 80 -> 1rem = 80px 总是假定10个rem就是一个屏幕的宽度
+    fontSize = fontSize > 50 ? 50 : fontSize              // 设置一个最大上限，一般都是50
+    html.style.fontSize = fontSize + 'px'                 // 设置根元素默认字体大小
+  })
+</script>
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+<style lang="scss" scoped> /* scoped:只在当前文件内有效 */
+  #app {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    // background: #7d8188;
+    overflow: hidden;
+  }
 </style>
