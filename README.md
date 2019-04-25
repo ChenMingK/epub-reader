@@ -157,4 +157,36 @@ transform: translate3d(0, px2rem(108), 0);
 先写好一个左中右的横线，然后有多少种字号就v-for即可，注意使用flex布局以及利用border画线<br>
 中间的图形可以通过border-radius实现，再加上点击事件即可
 
+### 7.进度条拖动效果如何实现？
+利用background-size属性：该属性定义图像的尺寸<br>
+``` javaScript
+ // 拖动进度条时触发
+onProgressInput(progress) {
+  this.progress = progress
+  this.$refs.progress.style.backgroundSize = `${this.progress}% 100%` // 改变进度条左右两侧的颜色
+}
+ ```
+ 
+ ``` css
+ .progress {
+   width: 100%;
+   -webkit-appearance: none; // 替换range的默认样式
+   height: px2rem(2);
+   background: -webkit-linear-gradient(#999, #999) no-repeat, #ddd;
+   background-size: 0 100%; // 利用这个属性实现，input时动态设置这个属性
+   &:focus {
+     outline: none; // 去除轮廓
+   }
+   &::-webkit-slider-thumb { // 手柄形状设置
+    -webkit-appearance: none; // 去除默认样式
+     height: px2rem(20);
+     width: px2rem(20);
+     border-radius: 50%;
+     background: white;
+     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, .15);
+     border: px2rem(1) solid #ddd;
+   }
+ }
+ ```
+背景属性设置线性渐变：background: linear-gradient(direction, color-stop1, color-stop2, ...);
 
